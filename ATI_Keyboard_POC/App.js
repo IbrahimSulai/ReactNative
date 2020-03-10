@@ -16,6 +16,7 @@ import {
   TextInput,
   TouchableOpacity,
   KeyboardAvoidingView,
+  Platform
 } from 'react-native';
 import theme from './theme';
 
@@ -92,15 +93,14 @@ class App extends React.Component {
   render() {
     var selectedIssue = this.state.issuesList.find((issue) => { return issue.id === this.state.selectedIssueId; });
     return (
-      <ScrollView
-        contentContainerStyle={{ flex: 1, marginTop: 100, marginHorizontal: 50 }}
-        contentInsetAdjustmentBehavior="automatic"
-        keyboardDismissMode='on-drag'
-        keyboardShouldPersistTaps={'handled'}
-      >
-        <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+      <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+        <ScrollView
+          contentContainerStyle={{ flex: 1 }}
+          keyboardDismissMode='on-drag'
+          keyboardShouldPersistTaps={'handled'}
+        >
           <Text style={styles.issueTitle}> Issues Updates * </Text>
-          <View style={{ flexDirection: "row", justifyContent: "space-evenly", alignItems: "center", borderColor: theme.borderGrey, borderWidth: 2, borderRadius: 10, height: 100 }}>
+          <View style={{ flexDirection: "row", justifyContent: "space-evenly", alignItems: "center", borderColor: theme.borderGrey, borderWidth: 2, borderRadius: 10, height: 100, marginHorizontal: 50 }}>
             {this.renderIssuesList()}
           </View>
           <Text style={styles.issueSubTitle}> Issues Update Notes </Text>
@@ -111,8 +111,7 @@ class App extends React.Component {
             onChangeText={(text) => this.setState({ issuesUpdatesNote: text })}
             value={this.state.issuesUpdatesNote}
           />
-          <View style={{ backgroundColor: "red", height: 100, marginVertical: 50 }} />
-          <View style={{ backgroundColor: "blue", height: 100, marginVertical: 50 }} />
+          <View style={{ backgroundColor: "blue", height: 100, marginVertical: 50, marginHorizontal: 50 }} />
           {this.state.selectedIssueId != null && selectedIssue && <TextInput
             placeholder="Add NotesType here..."
             style={[styles.textBox, styles.notes]}
@@ -121,8 +120,8 @@ class App extends React.Component {
             onChangeText={(text) => this.updateItem(this.state.selectedIssueId, { note: text })}
             value={selectedIssue.note}
           />}
-        </KeyboardAvoidingView>
-      </ScrollView>
+        </ScrollView>
+      </KeyboardAvoidingView>
     );
   }
 }
@@ -130,29 +129,31 @@ class App extends React.Component {
 const styles = StyleSheet.create({
   issueTitle: {
     textAlign: 'center',
-    fontFamily: "bold",
+    fontWeight: "bold",
     fontSize: 21,
     lineHeight: 21,
     letterSpacing: 2,
     color: theme.gray,
-    marginVertical: 20
+    marginVertical: 20,
+    marginHorizontal: 50
   },
   issueSubTitle: {
     textAlign: 'center',
-    fontFamily: "bold",
+    fontWeight: "bold",
     fontSize: 18,
     lineHeight: 18,
     letterSpacing: 1.5,
     color: theme.gray,
-    marginVertical: 20
+    marginVertical: 20,
+    marginHorizontal: 50
   },
   issueLabel: {
     textAlign: 'center',
-    fontFamily: "regular",
+    fontWeight: "normal",
     fontSize: 15,
     lineHeight: 18,
     letterSpacing: 0.54,
-    color: theme.gray,
+    color: theme.gray
   },
   issuesList: {
     alignSelf: 'center',
@@ -168,7 +169,7 @@ const styles = StyleSheet.create({
     borderColor: theme.black,
     borderWidth: 2,
     borderRadius: 10,
-    fontFamily: "regular",
+    fontWeight: "normal",
     fontSize: 15,
     letterSpacing: 0.34,
     padding: 10,
@@ -180,13 +181,15 @@ const styles = StyleSheet.create({
       width: 0
     },
     elevation: 1,
-    minHeight: 100
+    minHeight: 100,
+    marginHorizontal: 50
   },
   notes: {
     position: "absolute",
     bottom: 0,
     left: 0,
-    right: 0
+    right: 0,
+    marginHorizontal: 0
   }
 });
 
